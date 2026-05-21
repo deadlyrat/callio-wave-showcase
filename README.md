@@ -84,7 +84,9 @@ Ver [migra-crm-showcase](https://github.com/deadlyrat/migra-crm-showcase) para l
 
 ## Capturas de Pantalla
 
-> Capturas disponibles bajo solicitud — contactar para demo.
+<img src="assets/preview.jpeg" width="100%" alt="Panel principal de MigraCRM — el sistema que Callio Wave complementa" />
+
+> El overlay de la extension aparece directamente sobre la interfaz de Grandstream Wave al finalizar cada llamada. Capturas del overlay disponibles bajo solicitud.
 
 ---
 
