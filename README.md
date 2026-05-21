@@ -1,95 +1,97 @@
-# Callio Wave Add-in 🎙️
+# Callio Wave Add-in
 
-![Private](https://img.shields.io/badge/Code-Private%20%C2%B7%20Client%20Work-red?style=flat)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
+![Privado](https://img.shields.io/badge/Codigo-Privado%20%C2%B7%20Proyecto%20Cliente-red?style=flat)
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" width="18" align="absmiddle" /> ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
 ![WebExtensions](https://img.shields.io/badge/WebExtensions%20API-4285F4?style=flat&logo=googlechrome&logoColor=white)
 
-> **Browser extension for Grandstream Wave softphone that surfaces AI call summaries and caller history in real-time — the moment a call ends.**
+> **Extension de navegador para el softphone Grandstream Wave que muestra resumenes de llamadas con IA e historial del cliente en tiempo real — en el momento exacto en que termina la llamada.**
 
-> ⚠️ This is a **portfolio showcase** — source code is proprietary and not included.
-
----
-
-## 🧩 The Problem
-
-When call center agents using Grandstream Wave finished a call, they had to:
-
-1. Manually switch to the CRM tab
-2. Search for the caller by phone number
-3. Read through previous notes to get context
-4. Write their own summary of what was discussed
-
-This context-switching was slow, error-prone, and interrupted the agent's workflow at the exact moment they needed to take action.
+> Este es un **portfolio showcase** — el codigo fuente es propietario y no esta incluido.
 
 ---
 
-## 💡 The Solution
+## El Problema
 
-Callio Wave Add-in is a browser extension that **automatically detects when a call ends** in the Grandstream Wave softphone tab and immediately displays a floating overlay showing:
+Cuando los agentes de call center usando Grandstream Wave terminaban una llamada, tenian que:
 
-- The AI-generated summary of the call (from [MigraCRM](https://github.com/deadlyrat/migra-crm-showcase))
-- Caller history (previous calls, notes, action items)
-- Suggested next actions
+1. Cambiar manualmente a la pestana del CRM
+2. Buscar al cliente por numero de telefono
+3. Leer notas anteriores para obtener contexto
+4. Escribir su propio resumen de lo que se trato
 
-No tab switching. No searching. Everything right there, at the right moment.
+Este cambio de contexto era lento, propenso a errores, e interrumpia el flujo del agente en el momento exacto en que necesitaba tomar accion.
 
 ---
 
-## 🏗️ How It Works
+## La Solucion
 
-```
-Grandstream Wave (browser tab)
-        │
-        │  Extension monitors DOM for call-end events
-        ▼
-  [Callio Wave Extension]
-  Vanilla JavaScript · WebExtensions API
-        │
-        │  Polls MigraCRM backend when call ends
-        ▼
-  [MigraCRM API]  ──► Returns: AI summary + caller history
-        │
-        ▼
-  Overlay rendered in the Grandstream Wave tab
-  (caller name · sentiment · summary · previous calls · action items)
+Callio Wave Add-in es una extension de navegador que **detecta automaticamente cuando termina una llamada** en la pestana del softphone Grandstream Wave y muestra inmediatamente un overlay flotante con:
+
+- El resumen de la llamada generado por IA (desde [MigraCRM](https://github.com/deadlyrat/migra-crm-showcase))
+- Historial del cliente (llamadas anteriores, notas, acciones pendientes)
+- Proximas acciones sugeridas
+
+Sin cambiar de pestana. Sin buscar. Todo en el momento indicado.
+
+---
+
+## Funcionamiento
+
+```mermaid
+graph TD
+    GW["Grandstream Wave\nSoftphone en el navegador"]
+    EXT["Callio Wave Extension\nJavaScript · WebExtensions API"]
+    API["MigraCRM API"]
+    OV["Overlay en Grandstream Wave\nnombre del cliente · sentimiento · resumen\nllamadas anteriores · acciones sugeridas"]
+
+    GW -->|"Extension monitorea el DOM\nbuscando eventos de fin de llamada"| EXT
+    EXT -->|"Consulta al backend\ncuando finaliza la llamada"| API
+    API -->|"Devuelve resumen IA + historial"| EXT
+    EXT -->|"Inyeccion DOM"| OV
 ```
 
 ---
 
-## ✨ Features
+## Funcionalidades
 
-| Feature | Description |
-|---------|-------------|
-| 🔔 **Call-end detection** | Monitors the Grandstream Wave DOM for call completion events |
-| 📋 **AI Summary overlay** | Displays the Gemini-generated call summary directly in the softphone UI |
-| 👤 **Caller history** | Shows previous interactions, notes, and CDR records for the caller |
-| ✅ **Action items** | Surfaces suggested next steps from the AI analysis |
-| ⚡ **Zero friction** | No manual trigger — the overlay appears automatically as the call ends |
-
----
-
-## 🛠️ Tech Stack
-
-| Concern | Technology |
-|---------|-----------|
-| Extension | Vanilla JavaScript · WebExtensions API (Chrome/Firefox) |
-| Backend integration | REST polling against [MigraCRM](https://github.com/deadlyrat/migra-crm-showcase) API |
-| Rendering | DOM injection into Grandstream Wave UI |
+| Funcionalidad | Descripcion |
+|--------------|-------------|
+| Deteccion de fin de llamada | Monitorea el DOM de Grandstream Wave para eventos de cierre de llamada |
+| Overlay con resumen IA | Muestra el resumen generado por Gemini directamente en la interfaz del softphone |
+| Historial del cliente | Muestra interacciones previas, notas y registros CDR del cliente |
+| Acciones sugeridas | Presenta los proximos pasos sugeridos por el analisis de IA |
+| Cero friccion | Sin disparo manual — el overlay aparece automaticamente al finalizar la llamada |
 
 ---
 
-## 🔗 Related
+## Stack Tecnologico
 
-This extension is a companion to **MigraCRM** — it has no value standalone. The AI summaries and caller history it displays are produced by MigraCRM.
-
-👉 See [migra-crm-showcase](https://github.com/deadlyrat/migra-crm-showcase) for the full system architecture.
-
----
-
-## 📬 Contact
-
-Source code is proprietary. For enquiries: 📧 [pablozam1931@gmail.com](mailto:pablozam1931@gmail.com)
+| Componente | Tecnologia |
+|-----------|-----------|
+| Extension | JavaScript Vanilla · WebExtensions API (Chrome/Firefox) |
+| Integracion backend | REST polling contra la API de [MigraCRM](https://github.com/deadlyrat/migra-crm-showcase) |
+| Renderizado | Inyeccion DOM en la interfaz de Grandstream Wave |
 
 ---
 
-*Part of the [deadlyrat](https://github.com/deadlyrat) portfolio.*
+## Relacion con MigraCRM
+
+Esta extension es un complemento de **MigraCRM** — no tiene valor de forma independiente. Los resumenes con IA y el historial del cliente que muestra son producidos por MigraCRM.
+
+Ver [migra-crm-showcase](https://github.com/deadlyrat/migra-crm-showcase) para la arquitectura completa del sistema.
+
+---
+
+## Capturas de Pantalla
+
+> Capturas disponibles bajo solicitud — contactar para demo.
+
+---
+
+## Contacto
+
+El codigo fuente es propietario. Para consultas: [pablozam1931@gmail.com](mailto:pablozam1931@gmail.com)
+
+---
+
+*Parte del portfolio [deadlyrat](https://github.com/deadlyrat).*
